@@ -1,0 +1,35 @@
+<div class="container">
+  <h1>Welcome to UserDummies!</h1>
+  <p><i>In the business of gathering personal information since 2013</i></p>
+
+  <% unless @user.nil? %>
+  <form action="/logout">
+    <p>You are logged in as: <%= @user.name %>!</p>  
+    <input type="submit" value="log out">
+  </form>
+  <br><br><br>
+  <form action="/secret" method="post">
+    <input type="submit" value="Go to your secret page!">
+  </form>
+  
+  <% else %>
+
+  <form action="/create" method="post">
+    <input type="submit" value="Create a new user!">
+  </form>
+
+  <br><br><br>
+  <form action="/login" method="post">
+
+    <input type="text" name="email" placeholder="email">
+    <input type="text" name="password" placeholder="password">
+    <input type="submit" value="Time to login!">
+  </form>
+  
+  <% end %>
+  
+
+
+  
+
+</div>
