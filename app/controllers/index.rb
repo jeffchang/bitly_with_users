@@ -1,4 +1,5 @@
 require 'bcrypt'
+require 'securerandom'
 
 get '/' do
   # Look in app/views/index.erb
@@ -12,10 +13,7 @@ get '/logout' do
   erb :index
 end
 
-
-
 post '/create' do
-
   erb :create
 end
 
@@ -31,13 +29,36 @@ post '/login' do
   @user = User.authenticate(params[:email], params[:password])
   unless @user.nil?
     session[:user_id] = @user.id
-    erb :secret
+    redirect '/secret'
   else
     erb :index
   end
 end
 
-post '/secret' do
+access_secret = lambda do
   @user = User.find(session[:user_id])
+  @urls = Url.where(user_id: @user.id) || []
   erb :secret
+end
+
+post '/secret', &access_secret
+get '/secret', &access_secret
+
+
+create_url = lambda do
+  url_creation_logic
+end
+
+post '/urls', &create_url
+get '/urls', &create_url
+
+get '/invalid_url' do
+  erb :invalid_url
+end
+
+get '/:short_url' do
+  url = Url.where(short_url: params[:short_url]).first
+  url.click_count += 1
+  url.save
+  redirect url.url
 end

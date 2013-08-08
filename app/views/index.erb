@@ -1,6 +1,12 @@
 <div class="container">
-  <h1>Welcome to UserDummies!</h1>
-  <p><i>In the business of gathering personal information since 2013</i></p>
+  <h1>Welcome to the Fabianator, now with UserDummies capability!</h1>
+  <p><i>In the business of bit.ly + gathering personal information since 2013</i></p>
+
+  <form action="/urls" method="post">
+    <p>Please put your URL here!</p>
+    <input type="text" name="url">
+    <input type="submit">
+  </form>
 
   <% unless @user.nil? %>
   <form action="/logout">
@@ -13,12 +19,12 @@
   </form>
   
   <% else %>
-
+  <br><br><br><br>
   <form action="/create" method="post">
     <input type="submit" value="Create a new user!">
   </form>
 
-  <br><br><br>
+  <br><br>
   <form action="/login" method="post">
 
     <input type="text" name="email" placeholder="email">
@@ -28,8 +34,4 @@
   
   <% end %>
   
-
-
-  
-
 </div>
